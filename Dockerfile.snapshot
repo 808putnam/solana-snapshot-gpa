@@ -1,0 +1,20 @@
+FROM ghcr.io/808putnam/solana-snapshot-finder:0.1.0
+
+# For reference, we inherit from solana-snapshot-finder:
+# USER user
+# WORKDIR /solana
+# Staging of snapshot-finder.py
+
+# IMPORTANT: We get a more familiar shell and one that is more compliant
+#            to the installs below (e.g., asdf won't work with sh) if we
+#            use bash instead of sh.
+# References: 
+# https://stackoverflow.com/questions/20635472/using-the-run-instruction-in-a-dockerfile-with-source-does-not-work
+# https://docs.docker.com/engine/reference/builder/#shell
+SHELL ["/bin/bash", "-c"]
+
+# Now let's add in additional capabilities from solana-snapshot-gpa
+COPY --chown=user solana-snapshot-gpa/example/create-whirlpool-snapshot.sh .
+
+# This won't run yet, needs hook-up to archive donwloaded by solana-snapshot-finder
+ENTRYPOINT ["/bin/bash", "-c", "./solana/create-whirlpool-snapshot.sh"]
