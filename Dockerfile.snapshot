@@ -1,4 +1,4 @@
-FROM ghcr.io/808putnam/solana-snapshot-finder:0.1.0
+FROM ghcr.io/808putnam/qtrade-snapshot-finder:0.1.0
 
 # For reference, we inherit from solana-snapshot-finder:
 # USER user
