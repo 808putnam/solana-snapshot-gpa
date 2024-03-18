@@ -14,7 +14,15 @@ FROM ghcr.io/808putnam/qtrade-snapshot-finder:0.1.0
 SHELL ["/bin/bash", "-c"]
 
 # Now let's add in additional capabilities from solana-snapshot-gpa
-COPY --chown=user solana-snapshot-gpa/example/create-whirlpool-snapshot.sh .
+COPY --chown=user solana-snapshot-gpa/target/debug/solana-snapshot-gpa .
+COPY --chown=user solana-snapshot-gpa/example/create-qtrade-snapshot.sh .
 
-# This won't run yet, needs hook-up to archive donwloaded by solana-snapshot-finder
-ENTRYPOINT ["/bin/bash", "-c", "./solana/create-whirlpool-snapshot.sh"]
+# Create our named volume snapshot directory
+RUN mkdir /solana/snapshot \
+    && chown user:user /solana/snapshot
+
+ENTRYPOINT [ \
+    "/bin/bash" \
+    "-c", \
+    "create-qtrade-snapshot.sh" \
+]
