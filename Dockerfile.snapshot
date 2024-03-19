@@ -14,6 +14,7 @@ FROM ghcr.io/808putnam/qtrade-snapshot-finder:0.1.0
 SHELL ["/bin/bash", "-c"]
 
 # Now let's add in additional capabilities from solana-snapshot-gpa
+COPY --chown=user solana-snapshot-finder/qtrade-snapshot-finder.py .
 COPY --chown=user solana-snapshot-gpa/target/debug/solana-snapshot-gpa .
 COPY --chown=user solana-snapshot-gpa/example/create-qtrade-snapshot.sh .
 
@@ -21,8 +22,11 @@ COPY --chown=user solana-snapshot-gpa/example/create-qtrade-snapshot.sh .
 RUN mkdir /solana/snapshot \
     && chown user:user /solana/snapshot
 
-ENTRYPOINT [ \
-    "/bin/bash" \
-    "-c", \
-    "create-qtrade-snapshot.sh" \
-]
+ENTRYPOINT ["/solana/venv/bin/python3", "qtrade-snapshot-finder.py"]
+
+# For reference: How to call bash script, in case we switch to having a bash script run everything
+# ENTRYPOINT [ \
+#     "/bin/bash" \
+#     "-c", \
+#     "create-qtrade-snapshot.sh" \
+# ]

@@ -1,11 +1,13 @@
 #!/bin/bash
 
-# TODO: Clean up any previous runs
-rm -rf /solana/snapshot/*
+# For reference: In case we make script run everything
+# Clean up any previous runs
+# rm -rf /solana/snapshot/*
 
-# SNAPSHOT=$1
+SNAPSHOT=$1
+# For reference: In case we make script run everything
 # We capture the snapshot filename from snapshot-finder.py using a python print command
-SNAPSHOT=snapshot/`/solana/venv/bin/python3 qtrade-snapshot-finder.py`
+# SNAPSHOT=snapshot/`/solana/venv/bin/python3 qtrade-snapshot-finder.py`
 
 #                                      Given:    snapshot/snapshot-<slot>-<hash>.tar.zst
 #  First 'cut' in command below will produce:  snapshot/snapshot-<slot>-<hash>
@@ -15,6 +17,10 @@ if [ -z "$SLOT" ]; then
   echo "usage: create-qtrade-snapshot.sh snapshot-<slot>-<hash>.tar.zst"
   exit 2
 fi
+
+echo "Using the following snapshot and slot:"
+echo "Snapshot: $SNAPSHOT"
+echo "    Slot: $SLOT"
 
 SNAPSHOT_GPA=./solana-snapshot-gpa
 if [ ! -e "$SNAPSHOT_GPA" ]; then
