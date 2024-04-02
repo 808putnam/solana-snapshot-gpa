@@ -6,3 +6,5 @@ unpacked_snapshot/
 *.tar
 *.zst
 /test
+# qtrade
+snapshot/

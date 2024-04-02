@@ -1,0 +1,63 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        // For the solana-snapshot-gpa debug runs: 
+        // 1. cd ../solana-snapshot-finder
+        // 2. python3 -m venv .venv 
+        // 3. pip3 install -r requirements.txt --no-cache
+        // 4. You have built a debug version the solana-snapshot-gpa binary (needed to run task below)
+        // 5. You have run the task debug-exit-first/second-launch and updated the snapshot path in the args below.
+        //    - Ctrl-Shift-B to get to tasks drop-down
+        //    - The output from debug-exit-first/second-launch will specify the value(s) to update below before launching the debug run.
+        {
+            "name": "solana-snapshot-gpa - first launch",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/target/debug/solana-snapshot-gpa",
+            // "cargo": {
+            //     
+            //     "args": [
+            //         "build",
+            //         "--bin=solana-snapshot-gpa",
+            //         "--package=solana-snapshot-gpa"
+            //     ],
+            //     "filter": {
+            //         "name": "solana-snapshot-gpa",
+            //         "kind": "bin"
+            //     }
+            // },
+            "args": [
+                "--owner=whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
+                // Update with snapshot path as directed from task debug-exit-first-launch
+                "./snapshot/snapshot-262051768-BYxaJ61HLgy5h3KBqY27YaLJuyg7ad7zb3MxYWyn6Tam.tar.zst",
+            ],
+            "stdio": [null, "./snapshot/all_data_all.txt", null],
+            "cwd": "${workspaceFolder}",
+        },
+        {
+            "name": "solana-snapshot-gpa - second launch",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/target/debug/solana-snapshot-gpa",
+            // "cargo": {
+            //     
+            //     "args": [
+            //         "build",
+            //         "--bin=solana-snapshot-gpa",
+            //         "--package=solana-snapshot-gpa"
+            //     ],
+            //     "filter": {
+            //         "name": "solana-snapshot-gpa",
+            //         "kind": "bin"
+            //     }
+            // },
+            "args": [
+                "--pubkeyfile=<CLOSABLE_PUBKEY>",
+                // Update with snapshot path as directed from task debug-exit-second-launch
+                "./snapshot/incremental-snapshot-261921146-261939767-5dnifRXz4eHEFaw6g1UPLxpotcup8QJHV6dJNARyZHiN.tar.zst",                
+            ],
+            "stdio": [null, "./snapshot/closable_data_all.txt", null],
+            "cwd": "${workspaceFolder}",
+        },
+    ]	
+}

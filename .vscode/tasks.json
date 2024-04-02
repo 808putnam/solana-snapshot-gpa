@@ -1,0 +1,46 @@
+{
+    "version": "2.0.0",
+    // Ctrl-Shift-B to run a task
+    "tasks": [
+        {
+            "label": "debug-exit-first-launch",
+            "type": "shell",
+            "command": "python3",
+            "args": [
+                "${workspaceFolder}/../solana-snapshot-finder/qtrade-snapshot-finder.py",
+                "--snapshot_path=./snapshot", 
+                "-r=http://api.testnet.solana.com", 
+                "--min_download_speed=10",
+                "--solana_snapshot_gpa_path=./target/debug/solana-snapshot-gpa",
+                "--debug_exit_first_launch=true"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "debug-exit-second-launch",
+            "type": "shell",
+            "command": "python3",
+            "args": [
+                "${workspaceFolder}/../solana-snapshot-finder/qtrade-snapshot-finder.py",
+                "--snapshot_path=./snapshot", 
+                "-r=http://api.testnet.solana.com", 
+                "--min_download_speed=10",
+                "--solana_snapshot_gpa_path=./target/debug/solana-snapshot-gpa",
+                "--debug_exit_second_launch=true"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+    ]
+}

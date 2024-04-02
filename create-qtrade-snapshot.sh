@@ -108,7 +108,7 @@ if [[ "$SLOT" == "" ]]; then
     echo "--slot must be set"
     usage
 fi
-SLOT_PATH=$SNAPSHOT_FOLDER$SLOT
+SLOT_PATH=$SNAPSHOT_FOLDER/$SLOT
 if [[ "SOLANA_SNAPSHOT_GPA_PATH" == "" ]]; then
     echo "--solana_snapshot_gpa_path must be set"
     usage
@@ -126,6 +126,8 @@ if [[ "$DEBUG_EXIT_SECOND_LAUNCH" == "" ]]; then
     usage
 fi
 
+echo ""
+echo "==============================================================================="
 echo "Using the following values:"
 echo "         snapshot folder: $SNAPSHOT_FOLDER"
 echo "                snapshot: $SNAPSHOT"
@@ -135,6 +137,8 @@ echo "               slot path: $SLOT_PATH"
 echo "solana-snapshot-gpa path: $SOLANA_SNAPSHOT_GPA_PATH"
 echo " debug_exit_first_launch: $DEBUG_EXIT_FIRST_LAUNCH"
 echo "debug_exit_second_launch: $DEBUG_EXIT_SECOND_LAUNCH"
+echo "==============================================================================="
+echo ""
 
 # Original implementation: to be removed
 # SNAPSHOT_GPA=./solana-snapshot-gpa
@@ -142,8 +146,8 @@ echo "debug_exit_second_launch: $DEBUG_EXIT_SECOND_LAUNCH"
 #   echo "$SNAPSHOT_GPA does not exist"
 #   exit 1
 # fi
-# rm -irf $SLOT
-# mkdir -p $SLOT
+rm -rf $SLOT_PATH
+mkdir -p $SLOT_PATH
 
 # Original implementation: to be removed
 # ALL_DATA_ALL=$SLOT/all.data.all.csv
@@ -166,7 +170,16 @@ RESULT=$SLOT_PATH/whirlpool-snapshot-$SLOT.csv
 
 # Are we doing a debug run of the first launch of solana-snapshot-gpa?
 if [[ "$DEBUG_EXIT_FIRST_LAUNCH" == "true" ]]; then
-    echo "Exiting before first launch of solana-snapshot-gpa."
+    echo ""
+    echo "==============================================================================="
+    echo "Exiting before debug of first launch of solana-snapshot-gpa."
+    echo "To debug first launch of solana-snapshot-gpa:"
+    echo "1. Navigate to the 'solana-snapshot-gpa - first launch' debug configuration."
+    echo "2. Update args for --owner accordingly (see in script below for example)."
+    echo "3. Update the second argument to: $SNAPSHOT_PATH"
+    echo "==============================================================================="
+    echo ""
+
     exit
 fi
 
@@ -180,12 +193,21 @@ cat $POSITION_PUBKEY $POSITION_BUNDLE_PUBKEY > $CLOSABLE_PUBKEY
 
 # Are we doing a debug run of the second launch of solana-snapshot-gpa?
 if [[ "$DEBUG_EXIT_SECOND_LAUNCH" == "true" ]]; then
-    echo "Exiting before second launch of solana-snapshot-gpa."
+    echo ""
+    echo "==============================================================================="
+    echo "Exiting before debug of second launch of solana-snapshot-gpa."
+    echo "To debug second launch of solana-snapshot-gpa:"
+    echo "1. Navigate to the 'solana-snapshot-gpa - second launch' debug configuration."
+    echo "2. Update args for --pubkeyfile=$CLOSABLE_PUBKEY"
+    echo "3. Update the second argument to: $SNAPSHOT_PATH"
+    echo "==============================================================================="
+    echo ""
+
     exit
 fi
 
 # extract all Position accounts (all versions)
-$SOLANA_SNAPSHOT_GPA_PATH --pubkeyfile=$CLOSABLE_PUBKEY $SNAPSHOT > $CLOSABLE_DATA_ALL
+$SOLANA_SNAPSHOT_GPA_PATH --pubkeyfile=$CLOSABLE_PUBKEY $SNAPSHOT_PATH > $CLOSABLE_DATA_ALL
 
 # select latest write version
 tail -n +2 $ALL_DATA_ALL > $MERGED_DATA_ALL
