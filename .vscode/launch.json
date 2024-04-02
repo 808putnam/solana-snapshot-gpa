@@ -29,7 +29,7 @@
             "args": [
                 "--owner=whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc",
                 // Update with snapshot path as directed from task debug-exit-first-launch
-                "./snapshot/snapshot-262051768-BYxaJ61HLgy5h3KBqY27YaLJuyg7ad7zb3MxYWyn6Tam.tar.zst",
+                "./snapshot/snapshot-262105041-72EvPDMDeDcUTJoD1s9VLRTPf7iLcVPKoTNjyuufAWfh.tar.zst",
             ],
             "stdio": [null, "./snapshot/all_data_all.txt", null],
             "cwd": "${workspaceFolder}",
@@ -52,9 +52,9 @@
             //     }
             // },
             "args": [
-                "--pubkeyfile=<CLOSABLE_PUBKEY>",
+                "--pubkeyfile=./snapshot/262105041/closable.pubkey.csv",
                 // Update with snapshot path as directed from task debug-exit-second-launch
-                "./snapshot/incremental-snapshot-261921146-261939767-5dnifRXz4eHEFaw6g1UPLxpotcup8QJHV6dJNARyZHiN.tar.zst",                
+                "./snapshot/snapshot-262105041-72EvPDMDeDcUTJoD1s9VLRTPf7iLcVPKoTNjyuufAWfh.tar.zst",                
             ],
             "stdio": [null, "./snapshot/closable_data_all.txt", null],
             "cwd": "${workspaceFolder}",
